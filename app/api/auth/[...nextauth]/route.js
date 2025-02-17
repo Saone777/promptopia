@@ -1,9 +1,9 @@
-import NextAuth from 'next-auth';
+import NextAuth from 'next-auth'; //handles authentication
 import GoogleProvider from 'next-auth/providers/google';
 
 import User from '@models/user';
 import { connectToDB } from '@utils/database';
-
+//secure
 const handler = NextAuth({
   providers: [
     GoogleProvider({
