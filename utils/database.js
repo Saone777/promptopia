@@ -1,21 +1,30 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
-const connectDB = async () => {
+dotenv.config(); // Ensure .env variables are loaded
+
+let isConnected = false;
+
+export const connectToDB = async () => {
+  mongoose.set('strictQuery', true);
+
+  if (isConnected) {
+    console.log('MongoDB is already connected');
+    return;
+  }
+
   try {
-    if (!process.env.MONGO_URI) {
-      throw new Error("MONGO_URI is not defined");
-    }
+    console.log("MongoDB URI:", process.env.MONGODB_URI); // Debugging log
 
-    await mongoose.connect(process.env.MONGO_URI, {
+    await mongoose.connect(process.env.MONGODB_URI, {
+      dbName: "share_prompt",
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
 
-    console.log("MongoDB Connected");
+    isConnected = true;
+    console.log('MongoDB connected');
   } catch (error) {
-    console.error("MongoDB Connection Error:", error);
-    throw error;
+    console.error('MongoDB connection error:', error);
   }
 };
-
-export default connectDB;
