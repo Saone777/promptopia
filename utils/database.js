@@ -1,26 +1,21 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-let isConnected = false; // track the connection
-
-export const connectToDB = async () => {
-  mongoose.set('strictQuery', true);
-
-  if (isConnected) {
-    console.log('MongoDB is already connected');
-    return;
-  }
-
+const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI, {
-      dbName: "share_prompt",
-      // The options below are no longer necessary with MongoDB driver v4 and above
-      // useNewUrlParser: true,
-      // useUnifiedTopology: true,
+    if (!process.env.MONGO_URI) {
+      throw new Error("MONGO_URI is not defined");
+    }
+
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
     });
 
-    isConnected = true;
-    console.log('MongoDB connected');
+    console.log("MongoDB Connected");
   } catch (error) {
-    console.log('MongoDB connection error:', error);
+    console.error("MongoDB Connection Error:", error);
+    throw error;
   }
 };
+
+export default connectDB;
