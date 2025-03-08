@@ -8,7 +8,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
       </h1>
       <p className='desc text-left max-w-md'>
         {type} and share amazing prompts with the world, and let your
-        imagination run wild with any AI-powered platform.
+        imagination run wild with any AI-powered platform
       </p>
 
       <form
@@ -25,7 +25,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
             onChange={(e) => setPost({ ...post, prompt: e.target.value })}
             placeholder='Write your post here'
             required
-            className='form_textarea'
+            className='form_textarea '
           />
         </label>
 
